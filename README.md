@@ -100,3 +100,20 @@ Now that the proxy is set up, we need to configure tools like `proxychains` in o
 - Change the last line to the following `socks4 127.0.0.1 [PORT_NUM]`
 - The above statement is telling proxychains to use SOCKS4 as the proxy on our local address on [PORT_NUM]
 
+We are instructing proxychains to use the proxy set within metasploit and its route. The process is now: `tools -> proxychains -> metasploit socks4a proxy -> meterpreter routes -> meterpreter session -> target network`
+
+#### Use tools and utilize the new proxy
+Use a scanning tool like nmap targeting the target internal network
+- `proxychains nmap -sT -Pn -n 10.10.10.5 --top-ports 50`
+- By adding `proxychains` before the nmap command, we will force nmap to run through it.
+
+You can also route other things through proxychains as well. For example:
+- `proxychains ssh 10.10.10.XX`
+- `proxychains telnet 10.10.10.XX`
+
+You can also setup port forwarding:
+- Inside of meterpreter, the following command will open a listener on our local ip address on port 3333 and will forward the connection to the ip address 10.10.10.5 on port 3389
+- `portfwd add -l 3333 -p 3389 -r 10.10.10.5`
+- To check that is worked, run `portfwd` to list the forwards.
+
+Now we can use the forwarding rules to get a remote desktop session via a call like `rdesktop 127.0.0.1:3333`
