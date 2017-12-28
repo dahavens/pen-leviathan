@@ -67,7 +67,7 @@ Other:
 https://n0where.net/linux-post-exploitation
 
 
-# Mapping the Internal Network
+## Mapping the Internal Network
 
 ### Meterpreter Commands
 Basics:
@@ -85,9 +85,18 @@ Add a new route to the network to allow for a single host to scan their own inte
 - `run autoroute -s 10.10.10.0/24`
 - `route flush`
 
-### Windows Commands
-- route print
+Sometimes metasploit modules are not enough and you may want to run tools like nmap or nessus on these new hosts. To do this we will once again use the current session on the exploited machine, to pivot external tools via the meterpreter session and its route. In order to do this we will have to set up a socks4 proxy within metasploit and then use tools like proxychains to route the traffic through this proxy.
 
-### Linux Commands
-- route -v 
+#### Setup Proxy
+- `use auxiliary/server/socks4a`
+- configure a port to listen on
+- Execute: `run`
+- Can check for listening port via `netstat -tulpn | grep [PORT_NUM]`
+
+Now that the proxy is set up, we need to configure tools like `proxychains` in order to use the address and port set in metasploit. Proxychains is a tool that forces any tcp connection made by any given application, to follow through proxy like SOCKS4 SOCKS5 TOR and so on.
+
+#### Configure proxychains
+- Open up the proxychain configuration at: /etc/proxychain.conf
+- Change the last line to the following `socks4 127.0.0.1 [PORT_NUM]`
+- The above statement is telling proxychains to use SOCKS4 as the proxy on our local address on [PORT_NUM]
 
