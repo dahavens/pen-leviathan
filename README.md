@@ -66,3 +66,28 @@ Other:
 ### Linux
 https://n0where.net/linux-post-exploitation
 
+
+# Mapping the Internal Network
+
+### Meterpreter Commands
+Basics:
+- route
+- arp (good way to find new ip addresses in the network)
+- netstat (will show all the host network connections as well as the processes assocatied with them)
+- arp_scanner
+- ping_sweep (run outside of meterpreter, but has an option where it is set to a specific session number)
+- netenum (research more)
+
+Pivoting:
+Add a new route to the network to allow for a single host to scan their own internal network.
+
+- `route add 10.10.10.0/24 255.255.255.0 2` -> 2 is the session we want to route things through.
+- `run autoroute -s 10.10.10.0/24`
+- `route flush`
+
+### Windows Commands
+- route print
+
+### Linux Commands
+- route -v 
+
