@@ -117,3 +117,7 @@ You can also setup port forwarding:
 - To check that is worked, run `portfwd` to list the forwards.
 
 Now we can use the forwarding rules to get a remote desktop session via a call like `rdesktop 127.0.0.1:3333`
+
+### Pass the hash
+The metasploit module that we can use to run the pass-the-hash attack is called `psexec`
+
